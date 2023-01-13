@@ -1,6 +1,14 @@
+import { useState } from "react";
 import Formulario from "./components/Formulario";
 
 function App() {
+
+  const [citas, guardarCitas] =  useState([]);
+  
+  const crearCita = cita => {
+    guardarCitas([...citas, cita])
+  }
+
   return (
     <div className="App">
       <h1>Administrador de pacientes</h1>
@@ -8,10 +16,10 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="one-half column">
-            <Formulario />
+            <Formulario crearCita={ crearCita } />
           </div>
           <div className="one-half column">
-            2
+            
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
-function Formulario() {
+function Formulario({ crearCita }) {
+
   const [cita, actualizarCita] = useState({
     mascota: "",
     propietario: "",
@@ -8,6 +10,8 @@ function Formulario() {
     hora: "",
     sintomas: "",
   });
+
+  const [error, actualizarError] = useState(false);
 
   const handleChange = (e) => {
     actualizarCita({
@@ -18,17 +22,37 @@ function Formulario() {
 
   const { mascota, propietario, fecha, hora, sintomas } = cita;
 
+  const submitCita = (e) => {
+    e.preventDefault();
+    if (
+      mascota.trim() === "" ||
+      propietario.trim() === "" ||
+      fecha.trim() === "" ||
+      hora.trim() === "" ||
+      sintomas.trim() === ""
+    ) {
+      actualizarError(true);
+      return;
+    }
+    actualizarError(false);
+    cita.id = (uuidv4())
+    crearCita(cita)
+  };
+
   return (
     <>
       <h2>Crear cita</h2>
-      <form>
+
+      { error ?  <p className="alerta-error"> ¡Todos los campos son obligatorios! </p> : null }
+
+      <form onSubmit={submitCita}>
         <label>Nombre Mascota</label>
         <input
           type="text"
           name="mascota"
-          value={ mascota }
+          value={mascota}
           className="u-full-width"
-          placeholder="Nombre mascota"
+          placeholder="..."
           onChange={handleChange}
         />
 
@@ -36,9 +60,9 @@ function Formulario() {
         <input
           type="text"
           name="propietario"
-          value={ propietario }
+          value={propietario}
           className="u-full-width"
-          placeholder="Nombre dueño"
+          placeholder="..."
           onChange={handleChange}
         />
 
@@ -46,7 +70,7 @@ function Formulario() {
         <input
           type="date"
           name="fecha"
-          value={ fecha }
+          value={fecha}
           className="u-full-width"
           onChange={handleChange}
         />
@@ -55,7 +79,7 @@ function Formulario() {
         <input
           type="time"
           name="hora"
-          value={ hora }
+          value={hora}
           className="u-full-width"
           onChange={handleChange}
         />
@@ -63,8 +87,9 @@ function Formulario() {
         <label>Sintomas</label>
         <textarea
           name="sintomas"
+          placeholder="..."
           className="u-full-width"
-          value={ sintomas }
+          value={sintomas}
           onChange={handleChange}
         />
 
