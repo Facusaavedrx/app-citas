@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 function Formulario({ crearCita }) {
-
   const [cita, actualizarCita] = useState({
     mascota: "",
     propietario: "",
@@ -35,15 +34,24 @@ function Formulario({ crearCita }) {
       return;
     }
     actualizarError(false);
-    cita.id = (uuidv4())
-    crearCita(cita)
+    cita.id = uuidv4();
+    crearCita(cita);
+    actualizarCita({
+      mascota: "",
+      propietario: "",
+      fecha: "",
+      hora: "",
+      sintomas: "",
+    });
   };
 
   return (
     <>
       <h2>Crear cita</h2>
 
-      { error ?  <p className="alerta-error"> ¡Todos los campos son obligatorios! </p> : null }
+      {error ? (
+        <p className="alerta-error"> ¡Todos los campos son obligatorios! </p>
+      ) : null}
 
       <form onSubmit={submitCita}>
         <label>Nombre Mascota</label>
