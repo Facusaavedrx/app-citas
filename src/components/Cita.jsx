@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function Cita({ cita, eliminarCita }) {
   return (
     <div className="cita">
@@ -25,4 +27,8 @@ function Cita({ cita, eliminarCita }) {
   );
 }
 
+Cita.propTypes = {
+  cita: PropTypes.object,
+  eliminarCita: PropTypes.func,
+}
 export default Cita;
